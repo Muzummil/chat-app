@@ -17,7 +17,7 @@ export class ChannelsService {
       channels: [
         { id: "1", name: "General Channel" },
         { id: "2", name: "Technology Channel" },
-        { id: "5", name: "LGTM Channel" },
+        { id: "3", name: "LGTM Channel" },
       ],
     };
     return list;

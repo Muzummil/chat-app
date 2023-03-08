@@ -15,7 +15,7 @@ export class UsersService {
   getUsersList(): Observable<UsersList> {
     const list: UsersList = <UsersList>{
       users: [
-        { id: "Sam1", name: "Sam" },
+        { id: "Sam", name: "Sam" },
         { id: "Russell", name: "Russell" },
         { id: "Joyse", name: "Joyse" },
       ],

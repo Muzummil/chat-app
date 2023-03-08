@@ -68,7 +68,6 @@ export class ChannelsComponent implements OnInit {
    * @parameter channelId of tye string
    */
   changeChannel(channelId: string): void {
-    console.log(channelId);
     this.channelSelectionChange.emit(channelId);
   }
   /**

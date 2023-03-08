@@ -17,7 +17,6 @@ export class ChatWrapperComponent {
     selectedChannelId: this.selectedChannelId,
   };
   onUserChange(userId: string): void {
-    console.log("Changed", userId);
     this.selectedUserId = userId;
     this.selectedFields = {
       selectedUserId: userId,
@@ -25,7 +24,6 @@ export class ChatWrapperComponent {
     };
   }
   onChannelChange(channelId: string): void {
-    console.log("Changed", channelId);
     this.selectedChannelId = channelId;
     this.selectedFields = {
       selectedChannelId: channelId,
