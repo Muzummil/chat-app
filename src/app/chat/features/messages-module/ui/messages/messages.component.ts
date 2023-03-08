@@ -1,25 +1,25 @@
 // External Dependencies
 import { Store } from "@ngrx/store";
 import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
   Input,
   OnInit,
-  SimpleChanges,
   ViewChild,
+  Component,
+  ElementRef,
+  SimpleChanges,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import { BehaviorSubject, interval, Observable, take } from "rxjs";
 // Internal Dependencies
-import { MessagesInput } from "@app/shared/models/MessagesInput";
 import {
   loadMessagesList,
   loadMoreMessagesList,
-} from "../../data-access/state/messages.actions";
-import { FetchMoreMessagesFilters } from "../../models/FetchMoreMessagesFilters";
+} from "@app/chat/features/messages-module/data-access/state/messages.actions";
 import { Message } from "@app/chat/features/messages-module/models/MessagesList";
-import { MessagesListState } from "@app/chat/features/messages-module/models/MessagesListState";
 import { messagesList } from "@app/chat/features/messages-module/data-access/state/messages.selectors";
+import { MessagesInput } from "@app/shared/models/MessagesInput";
+import { MessagesListState } from "@app/chat/features/messages-module/models/MessagesListState";
+import { FetchMoreMessagesFilters } from "@app/chat/features/messages-module/models/FetchMoreMessagesFilters";
 
 @Component({
   selector: "app-messages",

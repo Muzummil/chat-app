@@ -8,7 +8,7 @@ import {
   loadChannelsList,
   loadChannelsListSuccess,
   loadUChannelsListFailure,
-} from "./channels.actions";
+} from "@app/chat/features/channels-module/data-access/state/channels.actions";
 import { ChannelsList } from "@app/chat/features/channels-module/models/ChannelsList";
 import { ChannelsService } from "@app/chat/features/channels-module/data-access/channels-service/channels.service";
 /**

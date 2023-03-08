@@ -3,11 +3,9 @@ import { Input } from "@angular/core";
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 // Internal Dependencies
 import { Message } from "@app/chat/features/messages-module/models/MessagesList";
-
 @Component({
   selector: "app-message-card",
   templateUrl: "./message-card.component.html",
-  styleUrls: ["./message-card.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageCardComponent {

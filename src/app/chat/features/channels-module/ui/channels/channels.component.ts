@@ -12,8 +12,8 @@ import { Observable, map } from "rxjs";
 // Internal Dependencies
 import { Channel } from "@app/chat/features/channels-module/models/ChannelsList";
 import { channelsList } from "@app/chat/features/channels-module/data-access/state/channels.selectors";
-import { loadChannelsList } from "@app/chat/features/channels-module/data-access/state/channels.actions";
 import { ChannelsListState } from "@app/chat/features/channels-module/models/ChannelsListState";
+import { loadChannelsList } from "@app/chat/features/channels-module/data-access/state/channels.actions";
 @Component({
   selector: "app-channels",
   templateUrl: "./channels.component.html",

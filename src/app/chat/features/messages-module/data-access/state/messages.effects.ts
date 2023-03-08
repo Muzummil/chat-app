@@ -5,17 +5,6 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { switchMap, map, catchError, concatMap } from "rxjs/operators";
 // Internal Dependencies
 import {
-  loadMessagesList,
-  loadMessagesListSuccess,
-  loadMoreMessagesList,
-  loadMoreMessagesListFailure,
-  loadMoreMessagesListSuccess,
-  loadUMessagesListFailure,
-  updateMessagesList,
-  updateMessagesListFailure,
-  updateMessagesListSuccess,
-} from "./messages.actions";
-import {
   Message,
   MessagesApiResponse,
   MoreMessagesApiResponse,
@@ -23,6 +12,7 @@ import {
 import { ApolloError } from "@app/shared/models/ApolloError";
 import { ErrorService } from "@app/shared/data-access/error-service/error.service";
 import { MessagesObj } from "@app/chat/features/messages-module/models/PostMessage";
+import * as MessagesActions from "@app/chat/features/messages-module/data-access/state/messages.actions";
 import { MessagesService } from "@app/chat/features/messages-module/data-access/messages-service/messages.service";
 /**
  * Messages List Effects Class
@@ -45,7 +35,7 @@ export class MessagesListEffects {
    */
   loadMessagessList$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(loadMessagesList),
+      ofType(MessagesActions.loadMessagesList),
       switchMap(({ filters }) =>
         from(
           // Get messages from API based on channelId
@@ -55,14 +45,16 @@ export class MessagesListEffects {
         ).pipe(
           // Take the returned value and return a new success action containing the MessagesList
           map((messages: MessagesApiResponse) => {
-            return loadMessagesListSuccess({
+            return MessagesActions.loadMessagesListSuccess({
               messages: messages.data.fetchLatestMessages,
             });
           }),
           // Or... if it errors return a new failure action containing the error
           catchError((error: ApolloError) => {
             const errorStr: string = this._errorService.getErrorMessage(error);
-            return of(loadUMessagesListFailure({ error: errorStr }));
+            return of(
+              MessagesActions.loadUMessagesListFailure({ error: errorStr })
+            );
           })
         )
       )
@@ -73,21 +65,23 @@ export class MessagesListEffects {
    */
   loadMoreMessagessList$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(loadMoreMessagesList),
+      ofType(MessagesActions.loadMoreMessagesList),
       // Used switchMap so that in case new request comes old will be cancelled
       switchMap(({ filters }) =>
         // Get more messages from API based on filters i.e channelId,messageId, old
         from(this._messagesService.getMoreMessages(filters)).pipe(
           // Take the returned value and return a new success action containing the MessagesList
           map((messages: MoreMessagesApiResponse) => {
-            return loadMoreMessagesListSuccess({
+            return MessagesActions.loadMoreMessagesListSuccess({
               messages: messages.data.fetchMoreMessages,
             });
           }),
           // Or... if it errors return a new failure action containing the error
           catchError((error: ApolloError) => {
             const errorStr: string = this._errorService.getErrorMessage(error);
-            return of(loadMoreMessagesListFailure({ error: errorStr }));
+            return of(
+              MessagesActions.loadMoreMessagesListFailure({ error: errorStr })
+            );
           })
         )
       )
@@ -98,7 +92,7 @@ export class MessagesListEffects {
    */
   updateMessagesList$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(updateMessagesList),
+      ofType(MessagesActions.updateMessagesList),
       // Used concatMap for message order
       concatMap(({ newMessage }) =>
         // Send new message to DB or to local state in case of error
@@ -106,7 +100,7 @@ export class MessagesListEffects {
           map((newAddedMessage: MessagesObj) => {
             let message: Message = newAddedMessage.data.postMessage;
             message.status = "Sent";
-            return updateMessagesListSuccess({
+            return MessagesActions.updateMessagesListSuccess({
               newMessage: message,
             });
           }),
@@ -118,7 +112,9 @@ export class MessagesListEffects {
               userId: newMessage.userId,
               status: "Error",
             };
-            return of(updateMessagesListFailure({ message: message }));
+            return of(
+              MessagesActions.updateMessagesListFailure({ message: message })
+            );
           })
         )
       )

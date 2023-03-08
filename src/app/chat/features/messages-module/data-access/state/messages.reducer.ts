@@ -1,17 +1,8 @@
 // External Dependencies
 import { createFeature, createReducer, on } from "@ngrx/store";
 // Internal Dependencies
-import {
-  loadMessagesList,
-  loadMoreMessagesList,
-  loadMessagesListSuccess,
-  loadUMessagesListFailure,
-  updateMessagesListFailure,
-  updateMessagesListSuccess,
-  loadMoreMessagesListFailure,
-  loadMoreMessagesListSuccess,
-} from "./messages.actions";
 import { MessagesListState } from "@app/chat/features/messages-module/models/MessagesListState";
+import * as MessagesActions from "@app/chat/features/messages-module/data-access/state/messages.actions";
 /**
  * Messages List Initial State
  */
@@ -29,14 +20,14 @@ export const messagesListReducer = createFeature({
   reducer: createReducer(
     initialState,
     // Handle loading list of messages
-    on(loadMessagesList, (state) => {
+    on(MessagesActions.loadMessagesList, (state) => {
       return {
         ...state,
         loading: true,
       };
     }),
     // Handle loading new/old more messages
-    on(loadMoreMessagesList, (state) => ({ ...state })),
+    on(MessagesActions.loadMoreMessagesList, (state) => ({ ...state })),
     // Optional for full section loading
     // on(loadMoreMessagesList, (state) => {
     //   return {
@@ -45,7 +36,7 @@ export const messagesListReducer = createFeature({
     //   };
     // }),
     // Handle successfully loaded Messages list
-    on(loadMessagesListSuccess, (state, { messages }) => {
+    on(MessagesActions.loadMessagesListSuccess, (state, { messages }) => {
       return {
         ...state,
         messagesList: messages,
@@ -54,7 +45,7 @@ export const messagesListReducer = createFeature({
       };
     }),
     // Handle Messages list load failure
-    on(loadUMessagesListFailure, (state, { error }) => {
+    on(MessagesActions.loadUMessagesListFailure, (state, { error }) => {
       return {
         ...state,
         error: error,
@@ -62,7 +53,7 @@ export const messagesListReducer = createFeature({
       };
     }),
     // Handle create new message success
-    on(updateMessagesListSuccess, (state, { newMessage }) => {
+    on(MessagesActions.updateMessagesListSuccess, (state, { newMessage }) => {
       // NewMessage object is added in the messagesList
       return {
         ...state,
@@ -71,7 +62,7 @@ export const messagesListReducer = createFeature({
       };
     }),
     // Handle create new message failure
-    on(updateMessagesListFailure, (state, { message }) => {
+    on(MessagesActions.updateMessagesListFailure, (state, { message }) => {
       // NewMessage object is added in the messagesList with error flag
       return {
         ...state,
@@ -80,7 +71,7 @@ export const messagesListReducer = createFeature({
       };
     }),
     // Handle successfully loaded More Messages list
-    on(loadMoreMessagesListSuccess, (state, { messages }) => {
+    on(MessagesActions.loadMoreMessagesListSuccess, (state, { messages }) => {
       return {
         ...state,
         messagesList: [...state.messagesList, ...messages],
@@ -89,7 +80,7 @@ export const messagesListReducer = createFeature({
       };
     }),
     // Handle More Messages list load failure
-    on(loadMoreMessagesListFailure, (state, { error }) => {
+    on(MessagesActions.loadMoreMessagesListFailure, (state, { error }) => {
       return {
         ...state,
         error: error,

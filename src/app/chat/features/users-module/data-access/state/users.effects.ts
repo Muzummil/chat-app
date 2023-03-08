@@ -8,7 +8,7 @@ import {
   loadUsersList,
   loadUsersListSuccess,
   loadUsersListFailure,
-} from "./users.actions";
+} from "@app/chat/features/users-module/data-access/state/users.actions";
 import { UsersList } from "@app/chat/features/users-module/models/UsersList";
 import { UsersService } from "@app/chat/features/users-module/data-access/users-service/users.service";
 /**
