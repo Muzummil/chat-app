@@ -1,0 +1,50 @@
+<ng-container *ngIf="message">
+  <ul>
+    <!-- Start of other's messages card -->
+    <li *ngIf="message.userId != _selectedUserId" class="chat-left">
+      <div class="chat-avatar">
+        <app-image
+          [imageName]="message.userId + '.png'"
+          [alt]="message.userId"
+        ></app-image>
+        <div class="chat-name">{{ message.userId }}</div>
+      </div>
+      <div class="chat-text">
+        {{ message.text }}
+      </div>
+      <div class="chat-hour">{{ message.datetime | date : "shortTime" }}</div>
+    </li>
+    <!-- End of other's messages card -->
+
+    <!-- Start of own messages card -->
+    <li *ngIf="message.userId == _selectedUserId" class="chat-right">
+      <div class="chat-hour">
+        {{ message.datetime | date : "shortTime" }}
+        <!-- Error status icon -->
+        <span
+          *ngIf="message.status === 'Error'; else sentStatusIcon"
+          class="fa fa-exclamation-circle"
+        ></span>
+        <!-- Send status icon -->
+        <ng-template #sentStatusIcon>
+          <span class="fa fa-check-circle"></span>
+        </ng-template>
+        <!-- Status text -->
+        <span class="chat-message">{{
+          message.status ? message.status : "Sent"
+        }}</span>
+      </div>
+      <div class="chat-text">
+        {{ message.text }}
+      </div>
+      <div class="chat-avatar">
+        <app-image
+          [imageName]="message.userId + '.png'"
+          [alt]="message.userId"
+        ></app-image>
+        <div class="chat-name">{{ _selectedUserId }}</div>
+      </div>
+    </li>
+    <!-- End of own messages card -->
+  </ul>
+</ng-container>

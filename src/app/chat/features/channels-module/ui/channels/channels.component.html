@@ -1,0 +1,14 @@
+<p>2. Choose your Channel</p>
+<ul *ngIf="channelsList$ | async as channels; else loading" class="users">
+  <li
+    (click)="changeChannel(channel.id)"
+    *ngFor="let channel of channels; trackBy: trackByChannelId"
+    class="channel cursor-pointer"
+    [ngClass]="{ 'active-user': _defaultChannelId === channel.id }"
+  >
+    <p class="name-time">
+      <span class="name">{{ channel.name }}</span>
+    </p>
+  </li>
+</ul>
+<ng-template #loading> Loading channels... </ng-template>

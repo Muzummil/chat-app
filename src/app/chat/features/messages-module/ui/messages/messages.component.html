@@ -1,0 +1,80 @@
+<div *ngIf="messagesListState$ | async as messagesState">
+  <!-- Condition to loading status -->
+  <ng-container *ngIf="!messagesState.loading; else loading">
+    <!-- Condition to handle error -->
+    <ng-container *ngIf="!messagesState.error; else error">
+      <!-- Condition to handle truthy of data array -->
+      <div *ngIf="messagesState?.messagesList as messagesList">
+        <!-- Start of No record found section -->
+        <div
+          *ngIf="messagesList.length === 0; else dataSection"
+          class="flex justify-center items-center"
+        >
+          <div>No message found</div>
+        </div>
+        <!-- End of No record found section -->
+        <ng-template #dataSection>
+          <ul class="chat-box chatContainerScroll">
+            <li class="chat-left">
+              <button
+                *ngIf="!(showLoadeMoreSpinner$ | async); else loadMoreloader"
+                type="button"
+                (click)="loadMoreMessages(messagesList, 'up')"
+                class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-teal-500 text-white hover:bg-teal-600"
+              >
+                Read More <i class="fa fa-arrow-up"></i>
+              </button>
+              <!-- Loader only for loadmore action -->
+              <ng-template #loadMoreloader>
+                <app-loader></app-loader>
+              </ng-template>
+            </li>
+            <!-- Scrolling section containing data array -->
+            <div
+              #scrollingDiv
+              class="scrollable-div max-h-[500px] overflow-y-scroll"
+            >
+              <div
+                *ngFor="
+                  let message of messagesList | sortDateTime;
+                  trackBy: trackByDateTime
+                "
+              >
+                <app-message-card
+                  [message]="message"
+                  [selectedUserId]="_dropdownValues.selectedUserId"
+                ></app-message-card>
+              </div>
+            </div>
+            <!-- Load newer messages with scroll down -->
+            <li class="chat-left">
+              <button
+                *ngIf="!(showLoadeMoreSpinner$ | async); else loadMoreloader"
+                type="button"
+                (click)="loadMoreMessages(messagesList, 'down')"
+                class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-teal-500 text-white hover:bg-teal-600"
+              >
+                Read More <i class="fa fa-arrow-down"></i>
+              </button>
+              <!-- Loader only for loadmore action -->
+              <ng-template #loadMoreloader>
+                <app-loader></app-loader>
+              </ng-template>
+            </li>
+          </ul>
+        </ng-template>
+      </div>
+    </ng-container>
+    <!-- Start of Error message string section-->
+    <ng-template #error>
+      <div class="flex justify-center items-center text-center text-[red]">
+        <div>{{ messagesState.error }}</div>
+      </div>
+    </ng-template>
+    <!-- End of Error message string section-->
+  </ng-container>
+
+  <ng-template #loading> <app-loader></app-loader> </ng-template>
+  <!-- Create New Message -->
+  <app-create-message [dropdownValues]="_dropdownValues"></app-create-message>
+</div>

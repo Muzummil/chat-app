@@ -1,0 +1,18 @@
+<div *ngIf="usersList$ | async as users; else loading" class="mb-4">
+  <label for="exampleFormControlSelect1">1. Choose your user</label>
+  <select
+    id="selectUser"
+    (change)="changeUser($event)"
+    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+  >
+    <option
+      [value]="user.id"
+      [selected]="_defaultUserId == user.id"
+      *ngFor="let user of users"
+    >
+      {{ user.name }}
+    </option>
+  </select>
+</div>
+
+<ng-template #loading> Loading users... </ng-template>

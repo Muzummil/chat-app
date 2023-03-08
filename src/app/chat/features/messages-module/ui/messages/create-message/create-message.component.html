@@ -1,0 +1,17 @@
+<div class="mt-3 mb-0">
+  <textarea
+    rows="3"
+    [(ngModel)]="newMessageText"
+    (ngModelChange)="saveTextAsDraft()"
+    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+    placeholder="Type your message here..."
+  ></textarea>
+  <button
+    type="button"
+    (click)="sendNewMessage()"
+    [disabled]="!newMessageText"
+    class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline disabled:bg-[darkgrey] bg-teal-500 text-white hover:bg-teal-600"
+  >
+    Send Message <i class="fa fa-send"></i>
+  </button>
+</div>
